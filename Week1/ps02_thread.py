@@ -41,7 +41,7 @@ def main():
     process = psutil.Process(os.getpid())
     mem_mb = process.memory_info().rss / (1024 * 1024)
 
-    print(f"===สรุป Multi-Thread===")
+    print(f"[*สรุปผล Multi-Thread*]")
     print(f"รวมเวลาทั้งหมด (Wall Time): {duration:0.2f} วินาที")
     print(f"รวมเวลาการใช้ CPU (CPU-bound): {cpu_duration:0.4f} วินาที")
     print(f"การใช้หน่วยความจำ (RAM) ทั้งหมด: {mem_mb:0.2f} MB")

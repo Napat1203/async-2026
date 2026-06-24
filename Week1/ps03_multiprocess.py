@@ -61,10 +61,10 @@ def main():
     total_memory = main_mem + sum(child_memories)
     total_cpu_time = (process_time() - main_start_cpu) + sum(child_cpu_times)
 
-    print(f"===[ข้อมูล Multi-processing]===")
+    print(f"[*สรุปผล Multi-processing*]")
     print(f"เวลาที่ใช้ทั้งหมด (Wall Time): {duration:.2f} วินาที")
     print(f"เวลาที่ใช้ CPU ทั้งหมด (Total CPU Time): {total_cpu_time:.4f} วินาที")
-    print(f"หน่วยความจำ (Memory RAM) Process: (total_memory:.2f) MB (Main: {main_mem:.2f} MB + ย่อย: {sum(child_memories):.2f} MB)")
+    print(f"หน่วยความจำ (Memory RAM) Process: {total_memory:.2f} MB (Main: {main_mem:.2f} MB + ย่อย: {sum(child_memories):.2f} MB)")
 
 if __name__ == "__main__":
     main()
