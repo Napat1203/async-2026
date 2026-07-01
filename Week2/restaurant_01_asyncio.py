@@ -6,7 +6,7 @@ async def greet_diners(customer):
     await asyncio.sleep(1)
     print(f"{ctime()} Greeting for Customer-{customer} ...Done!") 
 
-async def customer_workflow(customer):
+async def customer_private_workflow(customer):
     print(f"{ctime()} Taking order for Customer-{customer} ...")
     await asyncio.sleep(1)
     print(f"{ctime()} Taking order for Customer-{customer} ...Done!") 
@@ -31,7 +31,7 @@ async def main():
 
     tasks = []
     for customer in customers:
-        task = asyncio.create_task(customer_workflow(customer))
+        task = asyncio.create_task(customer_private_workflow(customer))
         tasks.append(task)
 
     for task in tasks:
