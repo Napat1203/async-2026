@@ -7,14 +7,14 @@ async def network_probe(server_name, delay):
     return f"Ping successful: {server_name}"
 
 async def main():
-    # 
+    # Create a set of tasks to run concurrently
     tasks = {
         asyncio.create_task(network_probe("Primary-Server", 2.0)),
         asyncio.create_task(network_probe("Backup-Server-1", 0.5)),
         asyncio.create_task(network_probe("Backup-Server-2", 1.0))
     }
     
-    # 
+    # Wait for the first task to complete
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
     
     print(f"{ctime()} Count of Tasks Done: {len(done)}")       # 
@@ -23,7 +23,7 @@ async def main():
     for finished_task in done:
         print(f"{ctime()} Fastest Task Result: {finished_task.result()}")
         
-    # 
+    # Cancel any remaining tasks
     for ongoing_task in pending:
         ongoing_task.cancel()
 

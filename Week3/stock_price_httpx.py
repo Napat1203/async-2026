@@ -10,7 +10,7 @@ async def fetch_stock_price(server_name: str):
     2. ใช้ httpx.AsyncClient() ดึงข้อมูลเพื่อไม่ให้เกิดการ Block สัญญาณ Event Loop
     3. นำข้อมูล JSON (server และ price_usd) มาจัดฟอร์แมตแสดงผล
     """
-    url = f"http://127.0.0.1:8088/price/{server_name}"
+    url = f"http://172.16.2.117:8088/price/{server_name}"
     
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
@@ -22,7 +22,21 @@ async def main():
     TODO: จัดการส่งกลุ่ม Tasks ทำ Concurrency Racing บนเซิร์ฟเวอร์ย่อย Alpha, Beta, Gamma
     และปิดกั้นทรัพยากรตัวที่ค้างคา (pending) ทิ้งทันทีเมื่อมีผู้ชนะ
     """
+    tasks = [
+        asyncio.create_task(fetch_stock_price("Alpha"), name="Alpha"),
+        asyncio.create_task(fetch_stock_price("Beta"), name="Beta"),
+        asyncio.create_task(fetch_stock_price("Gamma"), name="Gamma")
+    ]
+    done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    for finished_task in done:
+        print(f"{ctime()} Winner Task Result: {finished_task.result()}") 
     
+    if pending:
+        print(f"{ctime()} Cleaning up {len(pending)} pending tasks...")
+        for t in pending:
+            t.cancel()
 
-if __name__ == "__main__":
+        await asyncio.wait(pending)
     
+if __name__ == "__main__":
+    asyncio.run(main())

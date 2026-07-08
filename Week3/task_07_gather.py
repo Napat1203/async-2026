@@ -9,7 +9,7 @@ async def fetch_db_record(table_name, latency):
 async def main():
     start = time()
     
-    # 
+    # Run all tasks concurrently and gather their results
     results = await asyncio.gather(
         fetch_db_record("Users", 1.0),
         fetch_db_record("Products", 0.5),
