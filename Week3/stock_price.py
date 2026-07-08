@@ -13,12 +13,12 @@ async def main():
         asyncio.create_task(fetch_stock_price("Gamma", 1.5))
         }
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+
     for finished_task in done:
         print(f"{ctime()} Winner Result: {finished_task.result()}") 
     
-    if pending:
+    for t in pending:
+        t.cancel()
         print(f"{ctime()} Cleaning up {len(pending)} pending tasks...")
-        for t in pending:
-            t.cancel()
            
 asyncio.run(main())
