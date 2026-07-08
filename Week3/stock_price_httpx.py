@@ -22,14 +22,15 @@ async def main():
     TODO: จัดการส่งกลุ่ม Tasks ทำ Concurrency Racing บนเซิร์ฟเวอร์ย่อย Alpha, Beta, Gamma
     และปิดกั้นทรัพยากรตัวที่ค้างคา (pending) ทิ้งทันทีเมื่อมีผู้ชนะ
     """
-    tasks = [
-        asyncio.create_task(fetch_stock_price("Alpha"), name="Alpha"),
-        asyncio.create_task(fetch_stock_price("Beta"), name="Beta"),
-        asyncio.create_task(fetch_stock_price("Gamma"), name="Gamma")
-    ]
+    tasks = {
+        asyncio.create_task(fetch_stock_price("Alpha")),
+        asyncio.create_task(fetch_stock_price("Beta")),
+        asyncio.create_task(fetch_stock_price("Gamma"))
+    }
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    
     for finished_task in done:
-        print(f"{ctime()} Winner Task Result: {finished_task.result()}") 
+        print(f"{ctime()} Winner Result: {finished_task.result()}") 
     
     if pending:
         print(f"{ctime()} Cleaning up {len(pending)} pending tasks...")

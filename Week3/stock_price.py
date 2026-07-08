@@ -8,17 +8,17 @@ async def fetch_stock_price(server_name, delay):
 
 async def main():
     tasks = {
-        asyncio.create_task(fetch_stock_price("Alpha", 3.0), name="Alpha"),
-        asyncio.create_task(fetch_stock_price("Beta", 0.8), name="Beta"),
-        asyncio.create_task(fetch_stock_price("Gamma", 1.5), name="Gamma")
+        asyncio.create_task(fetch_stock_price("Alpha", 3.0)),
+        asyncio.create_task(fetch_stock_price("Beta", 0.8)),
+        asyncio.create_task(fetch_stock_price("Gamma", 1.5))
         }
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
     for finished_task in done:
-        print(f"{ctime()} Winner Task Result: {finished_task.result()}") 
+        print(f"{ctime()} Winner Result: {finished_task.result()}") 
     
     if pending:
         print(f"{ctime()} Cleaning up {len(pending)} pending tasks...")
         for t in pending:
             t.cancel()
-            
+           
 asyncio.run(main())
