@@ -14,11 +14,11 @@ async def main():
         }
     done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
 
-    for finished_task in done:
-        print(f"{ctime()} Winner Result: {finished_task.result()}") 
+    for tasks in done:
+        print(f"{ctime()} Winner Result: {tasks.result()}") 
     
-    for t in pending:
-        t.cancel()
+    for tasks in pending:
+        tasks.cancel()
         print(f"{ctime()} Cleaning up {len(pending)} pending tasks...")
            
 asyncio.run(main())
