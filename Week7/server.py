@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-STUDENTS = ["01","02","03","04","05","06"]
+STUDENTS = ["6710301034","6710301033","6710301043","6710301019","6710301020","6710301017"]
 GROUP_SIZE = len(STUDENTS)
 TOTAL_COUPONS = (GROUP_SIZE * 2) - 1 
 
@@ -13,7 +13,7 @@ coupons_db: List[str] = [f"COUPONS-{i:02d}" for i in range(1, TOTAL_COUPONS + 1)
 current_coupon_index = 0 
 student_claims: Dict[str, List[str]] = {student_id: [] for student_id in STUDENTS }
 
-coupon_lock = asyncio.Lock
+coupon_lock = asyncio.Lock()
 
 class ClaimRequest(BaseModel):
     student_id: str 
@@ -44,3 +44,10 @@ async def claim_coupon(req: ClaimRequest):
             return {"status": "SUCCESS", "claimed_coupon": coupon, "total_owned": len(student_claims[student_id])}
 
         return {"status": "OUT_OF_STOCK", "message": "คูปองหมดแล้ว"}
+
+@app.get("/summary")
+async def get_summary():
+    return {
+        "remaing_stock": len(coupons_db) - current_coupon_index,
+        "student_claims": student_claims
+    }

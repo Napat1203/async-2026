@@ -1,7 +1,7 @@
 import asyncio
 import httpx
 
-SERVER_IP = "localhost"
+SERVER_IP = "172.20.58.26"
 PORT = "8088"
 SERVER_URL = f"http://{SERVER_IP}:{PORT}"
 
