@@ -28,7 +28,7 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 async def redis_listener():
-    r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+    r = redis.Redis(host='172.20.57.3', port=6379, db=0, decode_responses=True)
     pubsub = r.pubsub()
     await pubsub.subscribe("game:state")
     

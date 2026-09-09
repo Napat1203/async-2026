@@ -7,7 +7,7 @@ import redis.asyncio as redis
 class TankBot:
     def __init__(self, team_name):
         self.team_name = team_name
-        self.r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+        self.r = redis.Redis(host='120.20.57.3', port=6379, db=0, decode_responses=True)
         self.pubsub_channel = "game:state"
         self.command_channel = "game:commands"
         self.current_state = None

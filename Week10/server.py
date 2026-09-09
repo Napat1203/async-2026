@@ -13,7 +13,7 @@ GAME_DURATION = 180      # เวลาแข่งขันสูงสุด: 
 
 class SecureTankGameServer:
     def __init__(self):
-        self.r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+        self.r = redis.Redis(host='172.20.57.3', port=6379, db=0, decode_responses=True)
         self.pubsub_channel = "game:state"
         self.command_channel = "game:commands"
         self.players = {}  

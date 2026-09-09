@@ -5,7 +5,7 @@ import redis.asyncio as redis
 
 class GameDashboard:
     def __init__(self):
-        self.r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+        self.r = redis.Redis(host='172.20.57.3', port=6379, db=0, decode_responses=True)
         self.pubsub_channel = "game:state"
 
     def clear_screen(self):
